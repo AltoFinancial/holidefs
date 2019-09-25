@@ -49,7 +49,7 @@ months:
   6:
   - name: Día del Padre
     regions: [mx]
-    wday: 7
+    wday: 0
     week: 3
     type: informal
   9:

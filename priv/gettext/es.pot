@@ -70,6 +70,9 @@ msgstr ""
 msgid "Fiesta Nacional de Cataluña"
 msgstr ""
 
+msgid "La Mercè"
+msgstr ""
+
 msgid "Día de Valencia"
 msgstr ""
 

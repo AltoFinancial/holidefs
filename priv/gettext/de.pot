@@ -40,6 +40,9 @@ msgstr ""
 msgid "Heilige Drei Könige"
 msgstr ""
 
+msgid "Internationaler Frauentag"
+msgstr ""
+
 msgid "Tag der Arbeit"
 msgstr ""
 

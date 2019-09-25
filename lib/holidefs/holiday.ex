@@ -40,8 +40,18 @@ defmodule Holidefs.Holiday do
 
   defp in_year_range?(%{"before" => before_year}, year), do: year <= before_year
   defp in_year_range?(%{"after" => after_year}, year), do: year >= after_year
-  defp in_year_range?(%{"limited" => years}, year), do: year in years
-  defp in_year_range?(%{"between" => years}, year), do: year in years
+
+  defp in_year_range?(%{"limited" => years}, year),
+    do: in_year_range?(%{"between" => years}, year)
+
+  defp in_year_range?(%{"between" => years}, year) when is_list(years) do
+    year in years
+  end
+
+  defp in_year_range?(%{"between" => years}, year) when is_binary(years) do
+    [from, to] = String.split(years, "..")
+    year in String.to_integer(from)..String.to_integer(to)
+  end
 
   defp build_from_rule(
          code,

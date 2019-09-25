@@ -1,8 +1,10 @@
 # Canadian holiday definitions for the Ruby Holiday gem.
-# Updated 2016-04-29.
+# Updated 2018-03-02.
 #
 # Notes:
 #  - 'Family Day' in various provinces are only celebrated after certain years: http://www.timeanddate.com/holidays/canada/family-day
+#  - 'Family Day' for New Brunswick after 2018  http://www.gnb.ca/legis/bill/FILE/58/3/Bill-67-e.htm
+#  - 'National Aboriginal Day for Yukon' Bill 2 received Royal Assent on May 8, 2017. http://www.gov.yk.ca/news/17-075.html
 ---
 months:
   0:
@@ -51,7 +53,19 @@ months:
     wday: 1
     week: 2
     year_ranges:
-    - after: 2013
+    - between: 2013..2018
+  - name: Family Day
+    regions: [ca_bc]
+    wday: 1
+    week: 3
+    year_ranges:
+    - after: 2019
+  - name: Family Day
+    regions: [ca_nb]
+    wday: 1
+    week: 3
+    year_ranges:
+    - after: 2018
   - name: Louis Riel Day
     regions: [ca_mb]
     wday: 1
@@ -94,6 +108,11 @@ months:
   - name: National Aboriginal Day
     regions: [ca_nt]
     mday: 21
+  - name: National Aboriginal Day
+    regions: [ca_yt]
+    mday: 21
+    year_ranges:
+    - after: 2017
   7:
   - name: Canada Day
     regions: [ca]
@@ -138,6 +157,10 @@ months:
     week: 1
     regions: [ca_nb]
     wday: 1
+  - name: Terry Fox Day
+    week: 1
+    regions: [ca_mb]
+    wday: 1
   - name: Discovery Day
     week: 3
     regions: [ca_yt]
@@ -171,11 +194,12 @@ months:
     mday: 26
     observed: to_weekday_if_boxing_weekend(date)
     type: informal
+
 methods:
   ca_victoria_day:
     # Monday on or before May 24
     arguments: year
-    source: |
+    ruby: |
       date = Date.civil(year,5,24)
       if date.wday > 1
         date -= (date.wday - 1)
@@ -359,7 +383,7 @@ tests:
     expect:
       holiday: false
 
-  # Family Day in BC - Should only be active on 2013 or later
+  # Family Day in BC on 2nd week - Should only be active between 2013 and 2018
   - given:
       date: '2013-02-11'
       regions: ["ca_bc"]
@@ -371,12 +395,12 @@ tests:
     expect:
       name: "Family Day"
   - given:
-      date: '2044-02-08'
+      date: '2018-02-12'
       regions: ["ca_bc"]
     expect:
       name: "Family Day"
 
-  # Family Day in BC - should not be active before 2013
+  # Family Day in BC on 2nd week - Should not be active before 2013 and after 2018
   - given:
       date: '2000-02-14'
       regions: ["ca_bc"]
@@ -390,6 +414,73 @@ tests:
   - given:
       date: '2012-02-13'
       regions: ["ca_bc"]
+    expect:
+      holiday: false
+  - given:
+      date: '2019-02-11'
+      regions: ["ca_bc"]
+    expect:
+      holiday: false
+  - given:
+      date: '2044-02-08'
+      regions: ["ca_bc"]
+    expect:
+      holiday: false
+
+  # Family Day in BC on 3nd week - Should only be active after 2018
+  - given:
+      date: '2019-02-18'
+      regions: ["ca_bc"]
+    expect:
+      name: "Family Day"
+  - given:
+      date: '2020-02-17'
+      regions: ["ca_bc"]
+    expect:
+      name: "Family Day"
+  - given:
+      date: '2044-02-15'
+      regions: ["ca_bc"]
+    expect:
+      name: "Family Day"
+
+  # Family Day in BC on 3nd week - Should not be active before 2019
+  - given:
+      date: '2000-02-21'
+      regions: ["ca_bc"]
+    expect:
+      holiday: false
+  - given:
+      date: '2011-02-21'
+      regions: ["ca_bc"]
+    expect:
+      holiday: false
+  - given:
+      date: '2018-02-19'
+      regions: ["ca_bc"]
+    expect:
+      holiday: false
+
+  # Family Day in NB - Should only be active on 2018 or later
+  - given:
+      date: '2018-02-19'
+      regions: ['ca_nb']
+    expect:
+      name: 'Family Day'
+  - given:
+      date: '2019-02-18'
+      regions: ['ca_nb']
+    expect:
+      name: 'Family Day'
+  # Family Day in NB - should not be active before 2018
+  - given:
+      date: '2016-02-18'
+      regions: ['ca_nb']
+    expect:
+      holiday: false
+  - given:
+      date: '2017-02-20'
+      regions: ['ca_nb']
     expect:
       holiday: false
 
@@ -671,3 +762,46 @@ tests:
       options: ["observed"]
     expect:
       name: "Boxing Day"
+
+  # Yukon National Aboriginal Day - should not be active before 2017
+  - given:
+      date: '2015-06-21'
+      regions: ['ca_yt']
+    expect:
+      holiday: false
+  - given:
+      date: '2016-06-21'
+      regions: ['ca_yt']
+    expect:
+      holiday: false
+  # Yukon National Aboriginal Day - should be active after 2017
+  - given:
+      date: '2017-06-21'
+      regions: ['ca_yt']
+    expect:
+      name: 'National Aboriginal Day'
+  - given:
+      date: '2018-06-21'
+      regions: ['ca_yt']
+    expect:
+      name: 'National Aboriginal Day'
+  - given:
+      date: '2019-08-05'
+      regions: ['ca_mb']
+    expect:
+      name: 'Terry Fox Day'
+  - given:
+      date: '2020-08-03'
+      regions: ['ca_mb']
+    expect:
+      name: 'Terry Fox Day'
+  - given:
+      date: '2015-08-03'
+      regions: ['ca_mb']
+    expect:
+      name: 'Terry Fox Day'
+  - given:
+      date: '2045-08-07'
+      regions: ['ca_mb']
+    expect:
+      name: 'Terry Fox Day'

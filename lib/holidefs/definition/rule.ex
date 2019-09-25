@@ -34,7 +34,7 @@ defmodule Holidefs.Definition.Rule do
         }
 
   @valid_weeks [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5]
-  @valid_weekdays 1..7
+  @valid_weekdays 0..6
 
   @doc """
   Builds a new rule from its month and definition map

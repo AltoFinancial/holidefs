@@ -76,6 +76,9 @@ msgstr ""
 msgid "New Brunswick Day"
 msgstr ""
 
+msgid "Terry Fox Day"
+msgstr ""
+
 msgid "Labour Day"
 msgstr ""
 

@@ -24,6 +24,7 @@ defmodule Holidefs do
     dk: "Denmark",
     ee: "Estonia",
     es: "Spain",
+    federalreserve: "Federal Reserve",
     fi: "Finland",
     fr: "France",
     gb: "United Kingdom",
