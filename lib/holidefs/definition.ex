@@ -40,7 +40,7 @@ defmodule Holidefs.Definition do
       code
       |> file_path()
       |> to_charlist()
-      |> YamlElixir.read_from_file()
+      |> YamlElixir.read_from_file!()
       |> Map.get("months")
       |> Enum.flat_map(fn {month, rules} ->
         for rule <- rules, do: Rule.build(code, month, rule)

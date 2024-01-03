@@ -103,7 +103,7 @@ defmodule HolidefsTest do
     count =
       code
       |> Definition.file_path()
-      |> YamlElixir.read_from_file()
+      |> YamlElixir.read_from_file!()
       |> Map.get("tests")
       |> Stream.flat_map(&check_expectations(code, &1))
       |> Enum.count(&(!&1))
